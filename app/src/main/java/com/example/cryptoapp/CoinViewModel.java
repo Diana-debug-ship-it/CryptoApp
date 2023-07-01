@@ -40,7 +40,6 @@ public class CoinViewModel extends AndroidViewModel {
         loadData();
         coinPriceInfoDao = AppDatabase.getInstance(application).coinPriceInfoDao();
         priceList.setValue(coinPriceInfoDao.getPriceList().getValue());
-        List<CoinPriceInfo> temp = priceList.getValue();
     }
 
     private MutableLiveData<List<CoinPriceInfo>> priceList = new MutableLiveData<>();

@@ -38,6 +38,8 @@ public class CoinDetailActivity extends AppCompatActivity {
             return;
         }
 
+        initViews();
+
         String fromSymbol = getIntent().getStringExtra(EXTRA_FROM_SYMBOL);
         viewModel.getDetailInfo(fromSymbol).observe(this, new Observer<CoinPriceInfo>() {
             @Override
@@ -58,5 +60,17 @@ public class CoinDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(context, CoinDetailActivity.class);
         intent.putExtra(EXTRA_FROM_SYMBOL, fromSymbol);
         return intent;
+    }
+
+    private void initViews(){
+        tvPrice = findViewById(R.id.tvPrice);
+        tvMinPrice = findViewById(R.id.tvMinPrice);
+        tvMaxPrice = findViewById(R.id.tvMaxPrice);
+        tvLastMarket = findViewById(R.id.tvLastMarket);
+        tvLastUpdate = findViewById(R.id.tvLastUpdate);
+        tvFromSymbol = findViewById(R.id.tvFromSymbol);
+        tvToSymbol = findViewById(R.id.tvToSymbol);
+        ivLogoCoin = findViewById(R.id.ivLogoCoin);
+
     }
 }
