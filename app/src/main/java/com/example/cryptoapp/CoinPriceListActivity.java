@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.cryptoapp.adapters.CoinInfoAdapter;
+import com.example.cryptoapp.adapters.CoinInfoDiffCallBack;
 import com.example.cryptoapp.adapters.OnCoinClickListener;
 import com.example.cryptoapp.api.ApiFactory;
 import com.example.cryptoapp.database.CoinPriceInfoDao;
@@ -44,7 +45,7 @@ public class CoinPriceListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rvCoinPriceList);
         progressBar = findViewById(R.id.pbLoading);
 
-        adapter = new CoinInfoAdapter();
+        adapter = new CoinInfoAdapter(new CoinInfoDiffCallBack());
         adapter.setOnCoinClickListener(new OnCoinClickListener() {
             @Override
             public void onCoinClick(CoinPriceInfo coinPriceInfo) {
@@ -62,7 +63,7 @@ public class CoinPriceListActivity extends AppCompatActivity {
             public void onChanged(List<CoinPriceInfo> coinPriceInfos) {
                 if (coinPriceInfos != null) {
                     Log.d(TAG, "onChanged: " + coinPriceInfos);
-                    adapter.setCoinInfoList(coinPriceInfos);
+                    adapter.submitList(coinPriceInfos);
                     progressBar.setVisibility(View.GONE);
                 }
             }

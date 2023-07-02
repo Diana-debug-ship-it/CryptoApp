@@ -8,21 +8,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cryptoapp.R;
 import com.example.cryptoapp.pojo.CoinPriceInfo;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder> {
-
-    private List<CoinPriceInfo> coinInfoList = new ArrayList<>();
+public class CoinInfoAdapter extends ListAdapter<CoinPriceInfo, CoinInfoAdapter.CoinInfoViewHolder> {
     private OnCoinClickListener onCoinClickListener;
 
+    public CoinInfoAdapter(CoinInfoDiffCallBack callBack) {
+        super(callBack);
+    }
 
     public OnCoinClickListener getOnCoinClickListener() {
         return onCoinClickListener;
@@ -30,12 +31,6 @@ public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinIn
 
     public void setOnCoinClickListener(OnCoinClickListener onCoinClickListener) {
         this.onCoinClickListener = onCoinClickListener;
-    }
-
-
-    public void setCoinInfoList(List<CoinPriceInfo> coinInfoList) {
-        this.coinInfoList = coinInfoList;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,7 +46,7 @@ public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinIn
 
     @Override
     public void onBindViewHolder(@NonNull CoinInfoViewHolder holder, int position) {
-        CoinPriceInfo coin = coinInfoList.get(position);
+        CoinPriceInfo coin = getItem(position);
         String symbolsTemplate = holder.itemView.getContext().getResources()
                 .getString(R.string.symbols_template);
         String lastUpdateTemplate = holder.itemView.getContext().getResources()
@@ -69,12 +64,6 @@ public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinIn
                 onCoinClickListener.onCoinClick(coin);
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        if (coinInfoList==null) return 0;
-        return coinInfoList.size();
     }
 
     public static class CoinInfoViewHolder extends RecyclerView.ViewHolder {
