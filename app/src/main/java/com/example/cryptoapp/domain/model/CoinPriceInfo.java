@@ -1,6 +1,6 @@
 package com.example.cryptoapp.pojo;
 
-import static com.example.cryptoapp.api.ApiFactory.BASE_IMAGE_URl;
+import static com.example.cryptoapp.data.network.ApiFactory.BASE_IMAGE_URl;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

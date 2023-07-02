@@ -14,17 +14,9 @@ import android.widget.ProgressBar;
 
 import com.example.cryptoapp.adapters.CoinInfoAdapter;
 import com.example.cryptoapp.adapters.OnCoinClickListener;
-import com.example.cryptoapp.api.ApiFactory;
-import com.example.cryptoapp.database.CoinPriceInfoDao;
 import com.example.cryptoapp.pojo.CoinPriceInfo;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CoinPriceListActivity extends AppCompatActivity {
 

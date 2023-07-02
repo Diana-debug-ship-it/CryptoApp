@@ -8,9 +8,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.cryptoapp.api.ApiFactory;
-import com.example.cryptoapp.database.AppDatabase;
-import com.example.cryptoapp.database.CoinPriceInfoDao;
+import com.example.cryptoapp.data.api.ApiFactory;
+import com.example.cryptoapp.data.database.AppDatabase;
+import com.example.cryptoapp.data.database.CoinPriceInfoDao;
 import com.example.cryptoapp.pojo.CoinPriceInfo;
 import com.example.cryptoapp.pojo.CoinPriceInfoRawData;
 import com.google.gson.Gson;
@@ -18,7 +18,6 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
