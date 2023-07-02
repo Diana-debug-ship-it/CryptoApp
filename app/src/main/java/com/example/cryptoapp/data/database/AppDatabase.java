@@ -1,4 +1,4 @@
-package com.example.cryptoapp.database;
+package com.example.cryptoapp.data.database;
 
 
 import android.content.Context;
@@ -7,9 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.cryptoapp.pojo.CoinPriceInfo;
-
-@Database(entities = {CoinPriceInfo.class}, version = 2, exportSchema = false)
+@Database(entities = {CoinInfoDbModel.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance = null;
     private static final String DB_NAME = "main.db";
@@ -29,5 +27,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
 
-    public abstract CoinPriceInfoDao coinPriceInfoDao();
+    public abstract CoinInfoDao coinPriceInfoDao();
 }

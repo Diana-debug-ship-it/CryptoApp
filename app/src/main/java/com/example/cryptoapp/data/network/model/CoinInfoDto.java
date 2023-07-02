@@ -1,4 +1,4 @@
-package com.example.cryptoapp.pojo;
+package com.example.cryptoapp.data.network.model;
 
 import static com.example.cryptoapp.data.network.ApiFactory.BASE_IMAGE_URl;
 
@@ -11,10 +11,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-@Entity(tableName = "full_price_list")
-public class CoinPriceInfo {
-    @PrimaryKey
-    @NonNull
+public class CoinInfoDto {
+
     @SerializedName("FROMSYMBOL")
     private String fromsymbol;
 
@@ -39,7 +37,7 @@ public class CoinPriceInfo {
     @SerializedName("IMAGEURL")
     private String imageurl;
 
-    public CoinPriceInfo(@NonNull String fromsymbol, String tosymbol, String price, Long lastupdate, String highday, String lowday, String lastmarket, String imageurl) {
+    public CoinInfoDto(@NonNull String fromsymbol, String tosymbol, String price, Long lastupdate, String highday, String lowday, String lastmarket, String imageurl) {
         this.fromsymbol = fromsymbol;
         this.tosymbol = tosymbol;
         this.price = price;
@@ -118,7 +116,7 @@ public class CoinPriceInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CoinPriceInfo that = (CoinPriceInfo) o;
+        CoinInfoDto that = (CoinInfoDto) o;
         return Objects.equals(fromsymbol, that.fromsymbol) && Objects.equals(tosymbol, that.tosymbol) && Objects.equals(price, that.price) && Objects.equals(lastupdate, that.lastupdate) && Objects.equals(highday, that.highday) && Objects.equals(lowday, that.lowday) && Objects.equals(lastmarket, that.lastmarket) && Objects.equals(imageurl, that.imageurl);
     }
 

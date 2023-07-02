@@ -1,6 +1,5 @@
-package com.example.cryptoapp.adapters;
+package com.example.cryptoapp.presentation.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cryptoapp.R;
-import com.example.cryptoapp.pojo.CoinPriceInfo;
+import com.example.cryptoapp.data.network.model.CoinInfoDto;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.Locale;
 
 public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinInfoViewHolder> {
 
-    private List<CoinPriceInfo> coinInfoList = new ArrayList<>();
+    private List<CoinInfoDto> coinInfoList = new ArrayList<>();
     private OnCoinClickListener onCoinClickListener;
 
 
@@ -33,7 +32,7 @@ public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinIn
     }
 
 
-    public void setCoinInfoList(List<CoinPriceInfo> coinInfoList) {
+    public void setCoinInfoList(List<CoinInfoDto> coinInfoList) {
         this.coinInfoList = coinInfoList;
         notifyDataSetChanged();
     }
@@ -51,7 +50,7 @@ public class CoinInfoAdapter extends RecyclerView.Adapter<CoinInfoAdapter.CoinIn
 
     @Override
     public void onBindViewHolder(@NonNull CoinInfoViewHolder holder, int position) {
-        CoinPriceInfo coin = coinInfoList.get(position);
+        CoinInfoDto coin = coinInfoList.get(position);
         String symbolsTemplate = holder.itemView.getContext().getResources()
                 .getString(R.string.symbols_template);
         String lastUpdateTemplate = holder.itemView.getContext().getResources()

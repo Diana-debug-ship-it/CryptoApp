@@ -1,14 +1,14 @@
-package com.example.cryptoapp.pojo;
+package com.example.cryptoapp.data.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-public class CoinInfo {
+public class CoinNameDto {
     @SerializedName("Name")
     private String name;
 
-    public CoinInfo(String name) {
+    public CoinNameDto(String name) {
         this.name = name;
     }
 
@@ -24,8 +24,8 @@ public class CoinInfo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CoinInfo coinInfo = (CoinInfo) o;
-        return Objects.equals(name, coinInfo.name);
+        CoinNameDto coinName = (CoinNameDto) o;
+        return Objects.equals(name, coinName.name);
     }
 
     @Override

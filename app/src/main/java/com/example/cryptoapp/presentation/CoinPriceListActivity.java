@@ -1,4 +1,4 @@
-package com.example.cryptoapp;
+package com.example.cryptoapp.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -12,9 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.cryptoapp.adapters.CoinInfoAdapter;
-import com.example.cryptoapp.adapters.OnCoinClickListener;
-import com.example.cryptoapp.pojo.CoinPriceInfo;
+import com.example.cryptoapp.R;
+import com.example.cryptoapp.presentation.adapters.CoinInfoAdapter;
+import com.example.cryptoapp.presentation.adapters.OnCoinClickListener;
+import com.example.cryptoapp.data.network.model.CoinInfoDto;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CoinPriceListActivity extends AppCompatActivity {
         adapter = new CoinInfoAdapter();
         adapter.setOnCoinClickListener(new OnCoinClickListener() {
             @Override
-            public void onCoinClick(CoinPriceInfo coinPriceInfo) {
+            public void onCoinClick(CoinInfoDto coinPriceInfo) {
                 Intent intent = CoinDetailActivity.newIntent(
                         CoinPriceListActivity.this,
                         coinPriceInfo.getFromsymbol());
@@ -49,9 +50,9 @@ public class CoinPriceListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(CoinPriceListActivity.this));
 
-        viewModel.getPriceList().observe(this, new Observer<List<CoinPriceInfo>>() {
+        viewModel.getPriceList().observe(this, new Observer<List<CoinInfoDto>>() {
             @Override
-            public void onChanged(List<CoinPriceInfo> coinPriceInfos) {
+            public void onChanged(List<CoinInfoDto> coinPriceInfos) {
                 if (coinPriceInfos != null) {
                     Log.d(TAG, "onChanged: " + coinPriceInfos);
                     adapter.setCoinInfoList(coinPriceInfos);

@@ -1,4 +1,4 @@
-package com.example.cryptoapp;
+package com.example.cryptoapp.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -10,7 +10,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.cryptoapp.pojo.CoinPriceInfo;
+import com.example.cryptoapp.R;
+import com.example.cryptoapp.data.network.model.CoinInfoDto;
 import com.squareup.picasso.Picasso;
 
 public class CoinDetailActivity extends AppCompatActivity {
@@ -41,9 +42,9 @@ public class CoinDetailActivity extends AppCompatActivity {
         initViews();
 
         String fromSymbol = getIntent().getStringExtra(EXTRA_FROM_SYMBOL);
-        viewModel.getDetailInfo(fromSymbol).observe(this, new Observer<CoinPriceInfo>() {
+        viewModel.getDetailInfo(fromSymbol).observe(this, new Observer<CoinInfoDto>() {
             @Override
-            public void onChanged(CoinPriceInfo coinPriceInfo) {
+            public void onChanged(CoinInfoDto coinPriceInfo) {
                 tvPrice.setText(coinPriceInfo.getPrice());
                 tvMinPrice.setText(coinPriceInfo.getLowday());
                 tvMaxPrice.setText(coinPriceInfo.getHighday());

@@ -6,19 +6,17 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.cryptoapp.data.network.model.CoinInfoDto;
-
 import java.util.List;
 
 @Dao
-public interface CoinPriceInfoDao {
+public interface CoinInfoDao {
 
-    @Query("SELECT * FROM CoinInfoDbModel ORDER BY lastupdate DESC")
-    LiveData<List<CoinInfoDto>> getPriceList();
+    @Query("SELECT * FROM full_price_list ORDER BY lastupdate DESC")
+    LiveData<List<CoinInfoDbModel>> getPriceList();
 
-    @Query("SELECT * FROM CoinInfoDbModel WHERE fromsymbol==:fsym LIMIT 1")
-    LiveData<CoinInfoDto> getPriceInfoAboutCoin(String fsym);
+    @Query("SELECT * FROM full_price_list WHERE fromsymbol==:fsym LIMIT 1")
+    LiveData<CoinInfoDbModel> getPriceInfoAboutCoin(String fsym);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPriceList(List<CoinInfoDto> priceList);
+    void insertPriceList(List<CoinInfoDbModel> priceList);
 }

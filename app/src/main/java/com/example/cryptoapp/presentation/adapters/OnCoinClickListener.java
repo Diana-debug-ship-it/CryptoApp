@@ -1,7 +1,7 @@
-package com.example.cryptoapp.adapters;
+package com.example.cryptoapp.presentation.adapters;
 
-import com.example.cryptoapp.pojo.CoinPriceInfo;
+import com.example.cryptoapp.data.network.model.CoinInfoDto;
 
 public interface OnCoinClickListener {
-    void onCoinClick(CoinPriceInfo coinPriceInfo);
+    void onCoinClick(CoinInfoDto coinPriceInfo);
 }

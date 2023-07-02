@@ -1,4 +1,4 @@
-package com.example.cryptoapp.data.api;
+package com.example.cryptoapp.data.network;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiFactory {
 
-    public static final String BASE_URL = "https://min-api.cryptocompare.com/data/";
+    private static final String BASE_URL = "https://min-api.cryptocompare.com/data/";
     public static final String BASE_IMAGE_URl = "https://cryptocompare.com";
 
 

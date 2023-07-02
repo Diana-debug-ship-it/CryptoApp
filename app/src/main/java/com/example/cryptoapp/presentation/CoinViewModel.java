@@ -1,4 +1,4 @@
-package com.example.cryptoapp;
+package com.example.cryptoapp.presentation;
 
 import android.app.Application;
 import android.util.Log;
@@ -8,11 +8,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.cryptoapp.data.api.ApiFactory;
+import com.example.cryptoapp.data.database.CoinInfoDao;
+import com.example.cryptoapp.data.network.model.CoinInfoDto;
+import com.example.cryptoapp.data.network.ApiFactory;
 import com.example.cryptoapp.data.database.AppDatabase;
-import com.example.cryptoapp.data.database.CoinPriceInfoDao;
-import com.example.cryptoapp.pojo.CoinPriceInfo;
-import com.example.cryptoapp.pojo.CoinPriceInfoRawData;
+import com.example.cryptoapp.data.network.model.CoinInfoJsonContainerDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -31,30 +31,30 @@ public class CoinViewModel extends AndroidViewModel {
 
     private static final String TAG = "TEST_LOADING_DATA";
 
-    private CoinPriceInfoDao coinPriceInfoDao;
+    private CoinInfoDao coinInfoDao;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public CoinViewModel(@NonNull Application application) {
         super(application);
         loadData();
-        coinPriceInfoDao = AppDatabase.getInstance(application).coinPriceInfoDao();
-        priceList.setValue(coinPriceInfoDao.getPriceList().getValue());
+        coinInfoDao = AppDatabase.getInstance(application).coinPriceInfoDao();
+        priceList.setValue(coinInfoDao.getPriceList().getValue());
     }
 
-    private MutableLiveData<List<CoinPriceInfo>> priceList = new MutableLiveData<>();
+    private MutableLiveData<List<CoinInfoDto>> priceList = new MutableLiveData<>();
 
-    public LiveData<List<CoinPriceInfo>> getPriceList() {
+    public LiveData<List<CoinInfoDto>> getPriceList() {
         return priceList;
     }
 
-    public LiveData<CoinPriceInfo> getDetailInfo(String fSym) {
-        return coinPriceInfoDao.getPriceInfoAboutCoin(fSym);
+    public LiveData<CoinInfoDto> getDetailInfo(String fSym) {
+        //return coinInfoDao.getPriceInfoAboutCoin(fSym);
     }
 
     private void loadData() {
         Log.d(TAG, "Loading data started");
         Disposable disposable = ApiFactory.apiservice.getTopCoinsInfo(50)
-                .map(value -> value.getData().stream().map(
+                .map(value -> value.getNames().stream().map(
                         data -> data.getCoinInfo().getName()).collect(Collectors.joining(","))
                 )
                 .flatMap(value -> ApiFactory.apiservice.getFullPriceList(value))
@@ -63,10 +63,10 @@ public class CoinViewModel extends AndroidViewModel {
                 .repeat()
                 .retry()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<CoinPriceInfo>>() {
+                .subscribe(new Consumer<List<CoinInfoDto>>() {
                                @Override
-                               public void accept(List<CoinPriceInfo> coinPriceInfos) throws Throwable {
-                                   coinPriceInfoDao.insertPriceList(coinPriceInfos);
+                               public void accept(List<CoinInfoDto> coinPriceInfos) throws Throwable {
+                                   coinInfoDao.insertPriceList(coinPriceInfos);
                                    Log.d(TAG, "Succesfully added to db");
                                    priceList.postValue(coinPriceInfos);
                                }
@@ -78,9 +78,9 @@ public class CoinViewModel extends AndroidViewModel {
     }
 
 
-    private List<CoinPriceInfo> getPriceListFromRawData(CoinPriceInfoRawData rawData) {
-        List<CoinPriceInfo> result = new ArrayList<>();
-        JsonObject jsonObject = rawData.getCoinPriceInfoJsonObject();
+    private List<CoinInfoDto> getPriceListFromRawData(CoinInfoJsonContainerDto rawData) {
+        List<CoinInfoDto> result = new ArrayList<>();
+        JsonObject jsonObject = rawData.getJson();
         if (jsonObject==null) {
             return result;
         }
@@ -89,9 +89,9 @@ public class CoinViewModel extends AndroidViewModel {
             JsonObject currencyJson = jsonObject.getAsJsonObject(coinKey);
             Set<String> currencyKeySet = currencyJson.keySet();
             for (String currencyKey: currencyKeySet) {
-                CoinPriceInfo priceInfo = new Gson().fromJson(
+                CoinInfoDto priceInfo = new Gson().fromJson(
                         currencyJson.getAsJsonObject(currencyKey),
-                        CoinPriceInfo.class
+                        CoinInfoDto.class
                 );
                 result.add(priceInfo);
             }
